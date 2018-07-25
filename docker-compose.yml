@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+    contentmine:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                EUCLID_TAG: ${EUCLID_TAG}
+                CM_POM_TAG: ${CM_POM_TAG}
+                SVG_TAG: ${SVG_TAG}
+                HTML_TAG: ${HTML_TAG}
+                PDF2SVG_TAG: ${PDF2SVG_TAG}
+                SVG2XML_TAG: ${SVG2XML_TAG}
+        image: elifesciences/contentmine:${IMAGE_TAG}
+        environment:
+            - CONTENTMINE_HOST=${CONTENTMINE_HOST}
+            - CONTENTMINE_PORT=${CONTENTMINE_PORT}
+        volumes:
+            - ./data:/data
+        ports:
+            - "8076:${CONTENTMINE_PORT}"
