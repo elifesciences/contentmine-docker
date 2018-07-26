@@ -10,6 +10,7 @@ elifePipeline {
             checkout scm
             sh "IMAGE_TAG=${commit} docker-compose build"
         }
+
         stage 'Run tests', {
             sh "IMAGE_TAG=${commit} ./project_tests.sh"
         }
@@ -25,7 +26,8 @@ elifePipeline {
 
         elifeMainlineOnly {
             stage 'Push images', {
-                sh './push.sh'
+                image = DockerImage.elifesciences(this, "contentmine", commit)
+                image.push().tag('latest').push()
             }
         }
     }
