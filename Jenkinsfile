@@ -26,7 +26,8 @@ elifePipeline {
 
         elifeMainlineOnly {
             stage 'Push images', {
-                sh './push.sh'
+                image = DockerImage.elifesciences(this, "contentmine", commit)
+                image.push().tag('latest').push()
             }
         }
     }
